@@ -1,0 +1,91 @@
+package com.example.android.imageef;
+
+import android.net.Uri;
+import android.support.v4.content.res.ResourcesCompat;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+import android.content.Context;
+import android.content.ContextWrapper;
+import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.LayerDrawable;
+import android.os.Environment;
+import android.support.v7.app.ActionBarActivity;
+import android.webkit.WebStorage;
+import android.widget.ImageView;
+
+public class MainActivity extends AppCompatActivity {
+
+    ImageView imageView;
+    Drawable milanface;
+    Bitmap bitmapimage;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        imageView = (ImageView) findViewById(R.id.imageView);
+
+        milanface = getResources().getDrawable(R.drawable.milan);
+        bitmapimage=((BitmapDrawable) milanface).getBitmap();
+        Bitmap newphoto =invertimage(bitmapimage);
+        imageView.setImageBitmap(newphoto);
+    }
+
+    public static Bitmap invertimage(Bitmap original){
+        Bitmap finalimage = Bitmap.createBitmap(original.getWidth(),original.getHeight(),original.getConfig());
+        int A,RED,G,B;
+        int pixelcolor;
+        int height = original.getHeight();
+        int width = original.getWidth();
+
+        for(int y=0;y<height;y++){
+            for(int x=0;x<width;x++){
+                pixelcolor = original.getPixel(x,y);
+                A=Color.alpha(pixelcolor);
+                RED=255-Color.red(pixelcolor);
+                G=255-Color.green(pixelcolor);
+                B=255-Color.blue(pixelcolor);
+                finalimage.setPixel(x,y,Color.argb(A,RED,G,B));
+            }
+        }
+        return finalimage;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
